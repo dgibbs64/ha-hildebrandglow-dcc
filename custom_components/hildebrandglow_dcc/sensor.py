@@ -286,14 +286,14 @@ class Usage(SensorEntity):
         if not self.initialised:
             (value, t_from) = await daily_data(self.hass, self.resource)
             if value:
-                self._attr_native_value = round(value, 2)
+                self._attr_native_value = value
                 self.initialised = True
         else:
-            # Only update the sensor if it's between 0-5 or 30-35 minutes past the hour
+            # Only update the sensor if it's between 1-5 or 30-35 minutes past the hour
             if await should_update():
                 (value, t_from) = await daily_data(self.hass, self.resource)
                 if value:
-                    self._attr_native_value = round(value, 2)
+                    self._attr_native_value = value
 
 
 class Cost(SensorEntity):
@@ -336,7 +336,7 @@ class Cost(SensorEntity):
                 self._attr_last_reset = t_from
                 self.initialised = True
         else:
-            # Only update the sensor if it's between 0-5 or 30-35 minutes past the hour
+            # Only update the sensor if it's between 1-5 or 30-35 minutes past the hour
             if await should_update():
                 (value, t_from) = await daily_data(self.hass, self.resource)
                 if value:
@@ -412,7 +412,7 @@ class Standing(CoordinatorEntity, SensorEntity):
             value = (
                 float(self.coordinator.data.current_rates.standing_charge.value) / 100
             )
-            self._attr_native_value = round(value, 4)
+            self._attr_native_value = value
             self.async_write_ha_state()
 
     @property
@@ -462,7 +462,7 @@ class Rate(CoordinatorEntity, SensorEntity):
         """Handle updated data from the coordinator."""
         if self.coordinator.data:
             value = float(self.coordinator.data.current_rates.rate.value) / 100
-            self._attr_native_value = round(value, 4)
+            self._attr_native_value = value
             self.async_write_ha_state()
 
     @property
