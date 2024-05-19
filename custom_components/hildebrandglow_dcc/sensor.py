@@ -289,7 +289,7 @@ class Usage(SensorEntity):
                 self._attr_native_value = value
                 self.initialised = True
         else:
-            # Only update the sensor if it's between 1-5 or 30-35 minutes past the hour
+            # Only update the sensor if it's between 1-5 or 31-35 minutes past the hour
             if await should_update():
                 (value, t_from) = await daily_data(self.hass, self.resource)
                 if value:
@@ -336,7 +336,7 @@ class Cost(SensorEntity):
                 self._attr_last_reset = t_from
                 self.initialised = True
         else:
-            # Only update the sensor if it's between 1-5 or 30-35 minutes past the hour
+            # Only update the sensor if it's between 1-5 or 31-35 minutes past the hour
             if await should_update():
                 (value, t_from) = await daily_data(self.hass, self.resource)
                 if value:
